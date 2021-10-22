@@ -79,6 +79,7 @@ def preprocess(text):
 # with the training set)
 def prepare_data(text):
     text = preprocess(text)
+    text = text[:40]
     text = vectorization(text)
     return np.array(text)
 
@@ -106,22 +107,25 @@ def resolve_intent(message: Message,label_language:Optional[str] = "de"):
     #tranlator for labels
     label_translator = GoogleTranslator(source= "auto", target = label_language)
 
+    res = {}
+    res["message_uuid"] = message.message_uuid
+    res["intents"] = []
 
     #translate message into english
     message.message = data_translator.translate(message.message)
 
-    # preprocess data
-    data = prepare_data(message.message)
-    # predict
-    prediction = model.predict(np.expand_dims(data, axis = 0))
+    messages = re.split(message.message, r"and|,|also|after|...")
+    for message in messages:
+        # preprocess data
+        data = prepare_data(message)
+        # predict
+        prediction = model.predict(np.expand_dims(data, axis = 0))
 
-    # create dictionary with the required information
-    res = {}
-    res["message_uuid"] = message.message_uuid
-    res["intents"] = []
-    for i, label in enumerate(labels):
-        if prediction[0][i] > 0.54:
-            new_intent = {"intent":label_translator.translate(label), 
-                        "confidence" : float(prediction[0][i]), "meta": {}}
-            res["intents"].append(new_intent)
-    return res
+        # create dictionary with the required information
+        
+        for i, label in enumerate(labels):
+            if prediction[0][i] > 0.54:
+                new_intent = {"intent":label_translator.translate(label), 
+                            "confidence" : float(prediction[0][i]), "meta": {}}
+                res["intents"].append(new_intent)
+        return res
