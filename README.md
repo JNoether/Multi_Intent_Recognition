@@ -30,6 +30,7 @@ Beispiele aus dem Datensatz:
 - Zur Übersetzung wird die Python library "Deep-translate" verwendet.  
 - Um wie in der Aufgabenstellung gefordert einen Satz mit mehreren Teilsätzen getrenntvoneinander zu klassifizieren wird die eingabe gegebenenfalls in verschiedene Teile durch Wörter wie "und", "danach", etc. oder durch kommata in verschiedene eingaben getrennt.
 - Wörter werden bevor sie in das NN eingegeben werden vektorisiert. Das hat den Vorteil, dass dadurch das zwei ähnliche wörte im (hier) 50-dimensionalen Raum nah zusammen liegen und dadurch ähnliche werte im vektor haben. Das hat zur folge dass das Model auch gut mit Wörter welche nicht direkt im Trainingssatz waren funktioniert.
+- Damit Label auch in einer beliebigen Sprache zurückgegeben werden können, lässt sich die gewollte Sprache als Query Parameter angeben(z.B. /resolve_intents_from_user_utterance/en gibt englische Label zurück). Wird keiner angegeben, werden die Label in deutscher Sprache zurück gegeben.
 
 # Technische Evaluation
 - Accuracy(Test Set): 95,80%
