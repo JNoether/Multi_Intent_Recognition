@@ -89,6 +89,7 @@ class Message(BaseModel):
 
 # load model
 model = load_model(os.path.join(os.getcwd(), "Models", "Disaster-Responce"))
+print(model)
 
 labels = ["request", "offer", "aid_related","medical_help","medical_products","search_and_rescue","security","military","child_alone","water","food","shelter","clothing","money","missing_people","refugees","death"	
         ,"other_aid","infrastructure_related","transport","buildings","electricity","tools","hospitals","shops","aid_centers","other_infrastructure","weather_related","floods","storm","fire","earthquake","cold"	
