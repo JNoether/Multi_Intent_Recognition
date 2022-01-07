@@ -1,5 +1,7 @@
 # Multi_Intent_Recognition
 
+## english version below
+
 Dies is die Einreichung von Jonathan Nöther für die SUSIS&James Coding Challenge(https://susiandjames.com/en/coding-challenge/). Es handelt es sich hierbei um eine API für Intent-Recognition. Das Skript für die API befindet sich im Ordner "API".
 # Features im Überblick
 - Erkennen von mehreren Intentionen in einem Text, auch wenn ein einzelner Teilsatz mehreren labels zugeordnet werden konnte
@@ -39,3 +41,44 @@ Beispiele aus dem Datensatz:
 - F1(Test Set): 97,50%
 
 Zusätzlich: Plots, z.B. Precision, Recall und F1 pro Label oder Confussion Matritzen im Model.ipynb Notebook(jupyter notebook benötigt)
+
+
+## English
+This is the submission of Jonathan Nöther for the SUSIS&James Coding Challenge(https://susiandjames.com/en/coding-challenge/). It is an API for Intent-Recognition. The script for the API is in the API-directory.
+
+# Features
+- Detection of multiple intentions of a sentence, even if a single sentence can be classified as multiple labels
+- Domain: Reports and emergency calls for natural disasters, accidents, etc.
+- Usability in multiple languages (by use of a translation API)
+
+# Domain
+The Disaster-Responce dataset consists of reports and emergency calls for disasters in multiple languages. For training, the provided english translation was used. By using the included translation-API inputs in every language are possible.
+Examples from the dataset:
+- Message: Se grangou mwen grangou, se sak fe mwen te voye mesaj la
+    - Translation : I am hungry, Because of that, I am writing this message
+    - Label: Request, Help Required, Food
+
+- Message: Nou salye w nan non senye a! Nou se fanmi Jn jules ki konpoze de 15 manb ( 5g, 10f ) nap viv nan fe mikrdi nou bezwen ed ou paske kay nou kraze nou pedi
+    - Translation: We are a family of 15, 5 men and 10 Women, we need help because our house collapsed
+    - Label: Request, Help Required, Shelter, Building
+
+- Message: Meanwhile, the death toll of soldiers in Tuesday's claymore mine explosion in the northern Jaffna peninsula increased to 12 after one soldier succumbed to his injuries in a hospital in Colombo.
+    - Label: Military, Death
+
+
+- Message: My thoughts and prayers go out to those who have been affected by the earthquake in Haiti
+    - Label: Weather, Earthquake
+
+# Technical Description
+- This project uses a neural network for classification implemented with tensorflow. The architecture consists of a LSTM-layer and two dense layers
+- For translation the Python libary "Deep-translate" is used
+- Words are vectorized before they are used as input for the neural network. This results is two similar words are placed close together in the 50-dimensional space and have similar values in the resulting vector. Thus, the model performs well with words that are not part of the training set.
+- To return classified labels in any language the required language can be used as a query parameter (e.g. /resolve_intents_from_user_utterance/en returns languages in english). By default, labels are returned in german.
+
+# Technical Evaluation
+- Accuracy(Test Set): 95,80%
+- Precision(Test Set): 96,35%
+- Recall(Test Set): 98,72%
+- F1(Test Set): 97,50%
+
+Additional plots, e.g. Precision, Recall und F1 for every label are accessible in the Model.iqynb notebook
